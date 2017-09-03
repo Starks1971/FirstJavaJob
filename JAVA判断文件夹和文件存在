@@ -1,0 +1,70 @@
+ /*
+   Java如何判断文件或者文件夹是否在？不存在如何创建？
+
+   1. 首先明确一点的是：test.txt文件可以和test文件夹同时存在同一目录下；test文件不能和test文件夹同时存在同一目录下。
+
+   原因是：
+
+   （1）win的文件和文件夹都是以节点形式存放，这就意味着相同的文件和文件名不能处在同一目录下，会命名冲突。
+
+   （2）文件后缀名也算是文件名的一部分，即test.txt文件和test文件不是相同文件名的文件。
+
+    
+
+   2. 基于以上原因，如果我想在d:创建一个test文件夹，但是d:下面有一个test文件，那么由于命名冲突，是不可能创建成功的。
+
+   所以，在创建之前，要通过file.exists()判断是否存在test命名的文件或者文件夹，如果返回true，是不能创建的；
+
+   然后再通过file.isDirectory()来判断这是不是一个文件夹。
+
+    
+   复制代码
+
+    1 import java.io.File;
+    2 import java.io.IOException;
+    3 
+    4 public class Main {
+    5 
+    6     public static void main(String[] args) {
+    7 
+    8         File file = new File("d:\\test_file.txt");
+    9         Main.judeFileExists(file);
+   10 
+   11         File dir = new File("d:\\test_dir");
+   12         Main.judeDirExists(dir);
+   13     }
+   14 
+   15     // 判断文件是否存在
+   16     public static void judeFileExists(File file) {
+   17 
+   18         if (file.exists()) {
+   19             System.out.println("file exists");
+   20         } else {
+   21             System.out.println("file not exists, create it ...");
+   22             try {
+   23                 file.createNewFile();
+   24             } catch (IOException e) {
+   25                 // TODO Auto-generated catch block
+   26                 e.printStackTrace();
+   27             }
+   28         }
+   29 
+   30     }
+   31 
+   32     // 判断文件夹是否存在
+   33     public static void judeDirExists(File file) {
+   34 
+   35         if (file.exists()) {
+   36             if (file.isDirectory()) {
+   37                 System.out.println("dir exists");
+   38             } else {
+   39                 System.out.println("the same name file exists, can not create dir");
+   40             }
+   41         } else {
+   42             System.out.println("dir not exists, create it ...");
+   43             file.mkdir();
+   44         }
+   45 
+   46     }
+   47    
+  */ 
